@@ -10,20 +10,20 @@ public class RestaurantTest {
 
   @Test
   public void restaurantInstantiatesCorrectly_true() {
-    Restaurant newRestaurant = new Restaurant("Happy's");
+    Restaurant newRestaurant = new Restaurant("Happy's", 3);
     assertTrue(newRestaurant instanceof Restaurant);
   }
 
   @Test
   public void restaurantInstantiatesWithName() {
-    Restaurant newRestaurant = new Restaurant("Happy's");
+    Restaurant newRestaurant = new Restaurant("Happy's", 3);
     assertEquals("Happy's", newRestaurant.getName());
   }
 
   @Test
   public void equals_returnsTrueIfSameName() {
-    Restaurant firstRestaurant = new Restaurant("Happy's");
-    Restaurant secondRestaurant = new Restaurant("Happy's");
+    Restaurant firstRestaurant = new Restaurant("Happy's", 3);
+    Restaurant secondRestaurant = new Restaurant("Happy's", 3);
     assertTrue(firstRestaurant.equals(secondRestaurant));
   }
 
@@ -34,14 +34,22 @@ public class RestaurantTest {
 
   @Test
   public void save_savesIntoDatabase_true() {
-    Restaurant newRestaurant = new Restaurant("Momo");
+    Restaurant newRestaurant = new Restaurant("Momo", 7);
     newRestaurant.save();
     assertTrue(Restaurant.all().get(0).equals(newRestaurant));
   }
 
   @Test
+  public void save_savesCuisineWithRestaurant() {
+    Restaurant restaurant = new Restaurant("La Sirenita", 1);
+    restaurant.save();
+    Restaurant savedRestaurant = Restaurant.find(restaurant.getId());
+    assertEquals("Mexican", savedRestaurant.getCuisine());
+  }
+
+  @Test
   public void find_findRestaurantInDatabase_true() {
-    Restaurant myRestaurant = new Restaurant("Burgerville #4428");
+    Restaurant myRestaurant = new Restaurant("Burgerville #4428", 3);
     myRestaurant.save();
     Restaurant savedRestaurant = Restaurant.find(myRestaurant.getId());
     assertTrue(myRestaurant.equals(savedRestaurant));
