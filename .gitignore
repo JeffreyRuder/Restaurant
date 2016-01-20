@@ -23,7 +23,7 @@
 # Logs and databases #
 ######################
 *.log
-*.sql
+# *.sql removed for now to allow database transfer
 *.sqlite
 
 # OS generated files #
